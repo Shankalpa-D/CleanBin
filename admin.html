@@ -3,16 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
+    <title>Admin Panel</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="admin-body">
-    <div class="admin-page">
-      <h1>Admin Dashboard</h1>
-      <input type="date" id="dateSelector" />
-      <button onclick="loadLogs()">Load Logs</button>
-      <div id="logsContainer"></div>
-      <button onclick="logout()">Logout</button>
+  <body class="stations-body" onload="adminInit()">
+    <div class="stations-page">
+      <h1>Admin Panel</h1>
+
+      <!-- Store selector -->
+      <select id="storeSelect" onchange="adminLoadStations()">
+        <option value="" disabled selected>Select a store</option>
+        <!-- options injected by adminInit() -->
+      </select>
+
+      <!-- Date picker -->
+      <input type="date" id="changeDate" onchange="adminLoadStations()" />
+
+      <!-- 2×2 grid per station -->
+      <div id="stations-container"></div>
+
+      <button class="logout-button" onclick="logout()">Logout</button>
     </div>
 
     <script src="firebase-config.js"></script>
