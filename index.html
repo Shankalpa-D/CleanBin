@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Log Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="login-body">
+    <div class="login-card">
+      <button class="admin-button" onclick="adminLogin()">Admin</button>
+      <h2>Daily Log</h2>
+      <input type="text" id="username" placeholder="Store (Ex: Mobile)" />
+      <input type="password" id="password" placeholder="Code (Ex: 9999)" />
+      <label class="remember-container">
+        <input type="checkbox" id="rememberMe" /> Remember Me
+      </label>
+      <button onclick="login()" class="signin-button">Sign In</button>
+      <div id="error-message" class="error-message"></div>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

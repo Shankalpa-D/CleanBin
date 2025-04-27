@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="admin-body">
+    <div class="admin-page">
+      <h1>Admin Dashboard</h1>
+      <input type="date" id="dateSelector" />
+      <button onclick="loadLogs()">Load Logs</button>
+      <div id="logsContainer"></div>
+      <button onclick="logout()">Logout</button>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

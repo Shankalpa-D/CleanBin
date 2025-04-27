@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Log Stations</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="stations-body" onload="loadStore()">
+    <div class="stations-page">
+      <!-- FINAL HEADER -->
+      <div class="page-header">
+        <h1>Daily Log</h1>
+        <h2 id="storeName">Store Name</h2>
+        <input type="date" id="changeDate" onchange="loadDateLogs()" />
+      </div>
+
+      <div id="stations-container">
+        <!-- Stations load here -->
+      </div>
+
+      <button class="logout-button" onclick="logout()">Logout</button>
+    </div>
+    <div id="popup" class="popup">Photo Saved!</div>
+
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

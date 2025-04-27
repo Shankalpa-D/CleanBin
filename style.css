@@ -1,0 +1,236 @@
+/* GENERAL */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #f8f8f8;
+}
+
+/* LOGIN PAGE */
+.login-body, .stations-body, .admin-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+  position: relative;
+}
+
+.admin-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.admin-button:hover {
+  background: #111;
+}
+
+h1, h2 {
+  color: #006241;
+  margin-bottom: 20px;
+}
+
+input[type="text"], input[type="password"], input[type="date"] {
+  width: 90%;
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.signin-button {
+  width: 90%;
+  background-color: #006241;
+  color: white;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.signin-button:hover {
+  background-color: #004d31;
+}
+
+.remember-container {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 10px;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+/* STATIONS PAGE */
+.stations-page {
+  width: 100%;
+  padding: 15px;
+  max-width: 600px;
+}
+
+.page-header {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  color: #006241;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.page-header h2 {
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logout-button {
+  margin-top: 30px;
+  background: #006241;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background: #004d31;
+}
+
+/* STATION SECTIONS */
+.station-section {
+  margin-top: 40px;
+}
+
+.station-title {
+  color: #006241;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.pictures-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.picture-slot {
+  background: #e8f5e9;
+  border: 2px dashed #006241;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.picture-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.upload-input {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.camera-placeholder {
+  width: 40px;
+  height: 40px;
+  opacity: 0.4;
+}
+
+/* ADMIN PAGE */
+.admin-page {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.admin-page input[type="date"] {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.admin-log {
+  background: #d0f0c0;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+
+.admin-log h2 {
+  margin-bottom: 10px;
+}
+
+.admin-img {
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #006241;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+.popup.show {
+  opacity: 1;
+}
