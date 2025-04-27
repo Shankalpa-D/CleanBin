@@ -25,26 +25,20 @@ function login() {
   }
 }
 
-// ─── Admin Login (opens modal) ────────────────────────────────────────────────
+// ─── Admin Login (modal) ───────────────────────────────────────────────────────
 function adminLogin() {
   const adminModal = document.getElementById('adminModal');
-  if (adminModal) {
-    document.getElementById('adminError').innerText = '';
-    document.getElementById('adminPasswordInput').value = '';
-    adminModal.classList.remove('hidden');
-  }
+  document.getElementById('adminError').innerText = '';
+  document.getElementById('adminPasswordInput').value = '';
+  adminModal.classList.remove('hidden');
 }
 
-// ─── Modal Handlers ───────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  const adminModal = document.getElementById('adminModal');
-  if (!adminModal) return;
+  // Modal close
+  document.querySelector('.modal-close')
+    .addEventListener('click', () => document.getElementById('adminModal').classList.add('hidden'));
 
-  // close button
-  adminModal.querySelector('.modal-close')
-    .addEventListener('click', () => adminModal.classList.add('hidden'));
-
-  // submit button
+  // Modal submit
   document.getElementById('adminSubmitBtn')
     .addEventListener('click', () => {
       const pwd = document.getElementById('adminPasswordInput').value.trim();
@@ -57,11 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ─── Barista Stations View (stations.html) ──────────────────────────────────
+// ─── Barista Stations View ──────────────────────────────────────────────────────
 function loadStore() {
   store = sessionStorage.getItem('store') || localStorage.getItem('store');
   if (!store) return window.location.href = "index.html";
-
   document.getElementById('storeName').innerText = store;
   today = new Date().toISOString().split('T')[0];
   document.getElementById('changeDate').value = today;
@@ -69,7 +62,8 @@ function loadStore() {
 }
 
 function loadStations() {
-  const stationsList = ['Hot Bar', 'Cold Bar', 'Warming', 'FOH', 'BOH'];
+  // Added "Others" with 10 slots
+  const stationsList = ['Hot Bar', 'Cold Bar', 'Warming', 'FOH', 'BOH', 'Others'];
   const container = document.getElementById('stations-container');
   container.innerHTML = '';
 
@@ -84,12 +78,12 @@ function loadStations() {
     container.appendChild(section);
 
     const grid = document.getElementById(`grid-${id}`);
-    for (let i = 1; i <= 4; i++) {
+    const slotCount = station === 'Others' ? 10 : 4;
+    for (let i = 1; i <= slotCount; i++) {
       const slot = document.createElement('div');
       slot.className = 'picture-slot';
       slot.innerHTML = `
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Camera_icon.svg"
-             class="camera-placeholder">
+        <img src="daily_log_website/images/camera_icon.png" class="camera-placeholder">
         <input type="file" accept="image/*" capture="camera"
                class="upload-input"
                onchange="uploadImage('${station}', ${i}, event)">
@@ -101,6 +95,7 @@ function loadStations() {
   loadExistingPhotos();
 }
 
+// ─── Upload & Load Helpers ──────────────────────────────────────────────────────
 async function uploadImage(station, slotNumber, event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -109,7 +104,6 @@ async function uploadImage(station, slotNumber, event) {
     const imgData = e.target.result;
     const path = `logs/${store}/${today}/${station.replace(/\s/g, '')}_pic${slotNumber}`;
     await firebaseSet(path, imgData);
-
     const slot = event.target.parentElement;
     const img = slot.querySelector('img');
     img.src = imgData;
@@ -121,7 +115,6 @@ async function uploadImage(station, slotNumber, event) {
 
 function showPopup(message) {
   const popup = document.getElementById('popup');
-  if (!popup) return;
   popup.textContent = message;
   popup.classList.add('show');
   setTimeout(() => popup.classList.remove('show'), 1500);
@@ -150,7 +143,7 @@ function loadDateLogs() {
   loadStations();
 }
 
-// ─── Logout (both views) ─────────────────────────────────────────────────────
+// ─── Logout ───────────────────────────────────────────────────────────────────
 function logout() {
   localStorage.removeItem('store');
   sessionStorage.removeItem('store');
@@ -158,17 +151,12 @@ function logout() {
   window.location.href = "index.html";
 }
 
-// ─── Firebase Helper ─────────────────────────────────────────────────────────
+// ─── Firebase Helper ──────────────────────────────────────────────────────────
 async function firebaseSet(path, value) {
   return firebase.database().ref(path).set(value);
 }
 
-// ─── (Optional) Legacy Admin.html loader ─────────────────────────────────────
-async function loadLogs() {
-  /* your existing admin.html loadLogs code, if still in use */
-}
-
-// ─── New Admin Panel (admin.html) ────────────────────────────────────────────
+// ─── Admin Panel View ─────────────────────────────────────────────────────────
 function adminInit() {
   if (!sessionStorage.getItem('isAdminAuthenticated')) {
     alert("Not authenticated");
@@ -193,7 +181,7 @@ function adminLoadStations() {
   store = selectedStore;
   today = selectedDate;
 
-  const stationsList = ['Hot Bar', 'Cold Bar', 'Warming', 'FOH', 'BOH'];
+  const stationsList = ['Hot Bar', 'Cold Bar', 'Warming', 'FOH', 'BOH', 'Others'];
   const container = document.getElementById('stations-container');
   container.innerHTML = '';
 
@@ -208,7 +196,8 @@ function adminLoadStations() {
     container.appendChild(section);
 
     const grid = document.getElementById(`grid-${id}`);
-    for (let i = 1; i <= 4; i++) {
+    const slotCount = station === 'Others' ? 10 : 4;
+    for (let i = 1; i <= slotCount; i++) {
       const slot = document.createElement('div');
       slot.className = 'picture-slot';
       slot.innerHTML = `<div class="no-data">NO DATA</div>`;
@@ -216,6 +205,7 @@ function adminLoadStations() {
     }
   });
 
+  // load saved images
   const dbRef = firebase.database().ref(`logs/${store}/${today}`);
   dbRef.once('value').then(snapshot => {
     if (!snapshot.exists()) return;
